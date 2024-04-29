@@ -1,0 +1,202 @@
+* img {
+    pointer-events: none;
+  }
+  * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+  }
+   body {
+      font-family: Arial, sans-serif;
+  }
+  header {
+      background-color: #505050;
+      color: #3ebfbb;
+      display: flex;
+      justify-content:space-between;
+      align-items: center;
+      position: fixed;
+      width: 100%;
+      height: 12%;
+      z-index: 1000;
+  }
+  
+  .search {
+      display: flex;
+      align-items: center;
+      margin-right: 0;
+  }
+  
+  .search form {
+      display: flex;
+      margin: 0;
+  }
+  
+  .search input {
+      padding: 10px;
+      border: 1px solid #ddd;
+      outline: none;
+      border-radius: 5px;
+      margin-right: 10px;
+      font-size: 16px;
+      width: 530px;
+  }
+  
+  .search button {
+      padding: 10px;
+      background-color: #fff;
+      border: none;
+      border-radius: 5px;
+      color: #333;
+      font-size: 19px;
+      cursor: pointer;
+  }
+  
+  
+  .LoginLogo {
+    display: flex;
+    background-color: #3ebfbb;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  
+  .LoginLogo p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 20px;
+    margin-left: 10px;
+    border-radius: 50px;
+    width: 22px;
+    height: 22px;
+    color: #505050;
+    cursor: pointer;
+  }
+  
+  /* Style the dropdown button */
+  .dropbtn {
+    background-color: #3ebfbb;
+    color: #505050;
+    padding: auto;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 20px;
+  }
+  
+
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 170px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border-radius: 5px;
+    /* Adjusting the position */
+    top: 65px; /* Adjust this value according to your header height */
+  }
+  
+  
+  /* Links inside the dropdown */
+  .dropdown-content a {
+    color: #505050;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  /* Change color of dropdown links on hover */
+  .dropdown-content a:hover {
+    background-color: #3ebfbb;
+    color: white;
+  }
+  
+  /* Show the dropdown menu on hover */
+  .LoginLogo:hover .dropdown-content {
+    display: block;
+  }
+  
+  
+  
+  .cart {
+    display: flex;
+    background-color: #3ebfbb;
+    justify-content: space-between;
+    align-items: center;
+    padding: 11px;
+    border-radius: 10px;
+    width: 65px;
+    margin-right: 20px;
+  }
+  
+  
+  .cart p {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 10px;
+    margin-left: 1px;
+    border-radius: 50px;
+    width: 22px;
+    height: 22px;
+    background-color: white;
+    color: #505050;
+  }
+  
+  
+  header nav ul {
+      list-style-type: none;
+  }
+  
+  header nav ul li {
+     display:inline;
+      margin-right: 30px;
+      color: white;
+  }
+  
+  header nav ul li a {
+      color: rgb(255, 255, 255);
+      text-decoration: none;
+      position: relative;
+    
+  }
+  
+  header nav ul li a::after {
+      content: "";
+      position: absolute;
+      background-color: #3ebfbb;
+      height: 3px;
+      width: 0;
+      left: 0;
+      bottom: -7.5px; 
+      transition: width 0.5s;
+  }
+  
+  header nav ul li a:hover {
+      color: #00ffff; 
+  }
+  
+  header nav ul li a:hover::after {
+      width: 100%; 
+  } 
+  
+  footer {
+    background-color: #505050;
+    color: #3ebfbb;
+    padding: 20px 0;
+    text-align: center;
+  }
+  
+  .footer_container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .footer_container p {
+    margin: 0;
+  }
+  

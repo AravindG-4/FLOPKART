@@ -1,0 +1,122 @@
+.home_container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 20px;
+  }
+
+  .home_container .card-content:hover{
+    box-shadow: 0 14px 6px #505050,
+    0 10px 10px #505050; 
+    transform: translate(0px, -8px);
+    z-index: 2;
+  }
+  
+  .card-content {
+    width: 20%;
+    margin: 15px;
+    text-align: center;
+    box-sizing: border-box;
+    cursor: pointer;
+    border-radius: 20px;
+   
+    box-shadow: 0 14px 6px #505050,
+    0 10px 10px #505050;
+    transition: .4s;
+    background: white;
+   z-index: 1;
+  }
+
+  
+
+  .card-content img {
+   
+    display: block; 
+    width: 275px;
+    height: 260px;
+    border-radius: 20px;
+    padding: 7px;
+    text-align: center;
+    margin: 0 auto;
+    z-index: -1;
+  }
+  
+  .card-content h2 {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+  
+  .card-content p {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+  
+  .card-content .price {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+  
+  .card-content button {
+    text-align: center;
+    font-size: 24px;
+    width: 100%;
+    padding: 15px;
+    background-color: #3ebfbb;
+    color: #505050;
+    border: 0;
+    outline: none;
+    margin-top: 5px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .card-content button:hover {
+    background-color: #505050;
+    color: #3ebfbb;
+  }
+
+  .fa {
+    font-size: 26px;
+    transition: .4s;
+  }
+
+  .checked {
+    color: #3ebfbb;
+  }
+
+  .card-content .fa :hover{
+    transform: scale(1.3);
+    transition: .6s;
+  }
+
+.hero {
+    background-size: cover;
+    color: #505050;
+    text-align: center;
+    padding: 5px;
+    margin-left: 36px;
+    margin-right: 36px;
+    border-radius: 10px;
+}
+
+.hero h2 {
+    font-size: 3em;
+    margin: 20px;
+}
+
+.hero p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+}
+.hero a {
+    display: inline-block;
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+}

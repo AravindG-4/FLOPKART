@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+      <script>
+        function validateForm() {
+            var uname = document.forms["signupForm"]["uname"].value;
+            var email = document.forms["signupForm"]["email"].value;
+            var password = document.forms["signupForm"]["password"].value;
+            var conf_password = document.forms["signupForm"]["conf_password"].value;
+
+            // Validate username length
+            if (uname.length < 8) {
+                document.getElementById("unameError").innerHTML = "Username must be at least 8 characters long<br><br>";
+                return false;
+            } else {
+                document.getElementById("unameError").innerHTML = "";
+            }
+
+            // Validate email format
+            if (email.startsWith('@') || (!email.endsWith('@gmail.com') && !email.endsWith('@admin.com'))) {
+                document.getElementById("emailError").innerHTML = "Invalid Email Id<br><br>";
+                return false;
+            } else {
+                document.getElementById("emailError").innerHTML = "";
+            }
+
+            // Validate password 
+            var passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+            if (!passwordPattern.test(password)) {
+                document.getElementById("passwordError").innerHTML = "Password must be of atleast 8 characters and contain atleast 1 uppercase, 1 lowercase, 1 special character, 1 number<br><br>";
+                return false;
+            } else {
+                document.getElementById("passwordError").innerHTML = "";
+            }
+
+            // Validate password confirmation
+            if (password !== conf_password) {
+                document.getElementById("confPasswordError").innerHTML = "Passwords do not match";
+                return false;
+            } else {
+                document.getElementById("confPasswordError").innerHTML = "";
+            }
+        }
+    </script>
+
+
+    
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+   <div class="body_content">
+    <div class="container">
+        <div class="half1" style="background-color:#505050">
+            <div>
+                <img src="{% get_media_prefix %}dev_images\logo.png" alt="Placeholder Image" height="100px" width="100%">
+                <h2><br>New here?<br>Get Started  Now!</h2><br>
+                <img src="{% get_media_prefix %}dev_images\ecom_header.png" alt="Placeholder Image" height="250px" width="375px">
+            </div>
+        </div>
+        <div class="half2" style="background-color:#3ebfbb">
+            <form action="" method="post" name="signupForm" class="form" onsubmit="">
+                {% csrf_token %}
+
+                <div class="signup">
+
+                    <div class="head" style="text-align: center">
+                        <h3 style="color:#3ebfbb">Welcome to <a href="#" style="color:#3ebfbb">FLOPKART!</a></h3>
+                        <p style="color:#3ebfbb">Signup to continue</p>
+                    </div>
+                    
+                    <label for="uname"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="uname" required>
+                    <span id="unameError" style="color: red;"></span>
+
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Email" name="email" required>
+                    <span id="emailError" style="color: red;"></span>
+              
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+                    <span id="passwordError" style="color: red;"></span>
+
+                    <label for="conf_password"><b>Confirm Password</b></label>
+                    <input type="password" placeholder="Re-Enter Password" name="conf_password" required>
+                    <span id="confPasswordError" style="color: red;"></span>
+                      
+                    <button type="submit">Signup</button>
+
+                </div>
+
+                <div class="bottom" style="text-align:center">
+                  <span class="other_user">Already having an account? <a href="{% url 'login' %}">Login</a></span>
+                </div>
+
+            </form>
+        </div>
+    </div>
+    </div>
+    {% endblock %}
