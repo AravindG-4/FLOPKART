@@ -12,31 +12,50 @@ def home(request):
 
 def user_login(request):
     
-    try:
-        if user.is_authenticated:
-            messages.success(request, "User already logged in⚠️")
-            return redirect('home')
-    except:  
-        
+    if request.user.is_authenticated:
+        # messages.success(request, "User already logged in⚠️")
+        return redirect('home')
+    
+    else:
         if request.method=='POST':
             username=request.POST.get('uname')
             password=request.POST.get('password')
-        
-        
-            # if request.user.is_authenticated:
-            #     messages.success(request, "User already logged in⚠️")
-            #     return redirect('home')
-        
-        user=authenticate(request,username=username,password=password)
-        
-        if user is not None:
-            login(request,user)
-            return redirect('home')
-        else:
-            messages.success(request, "Invalid credentials ⚠️")
-            return redirect('user_login')
+            
+            try:
+                user=authenticate(request,username=username,password=password)
+            
+                if user is not None:
+                    login(request,user)
+                    return redirect('home')
+            except:
+                messages.success(request, "Invalid credentials ⚠️")
+                return redirect('user_login')
 
-    return render (request,'login.html', {'user': request.user})
+        return render (request,'login.html')
+    # try:
+    #     if user.is_authenticated:
+    #         messages.success(request, "User already logged in⚠️")
+    #         return redirect('home')
+    # except:  
+        
+    #     if request.method=='POST':
+    #         username=request.POST.get('uname')
+    #         password=request.POST.get('password')
+        
+        
+    #         # if request.user.is_authenticated:
+    #         #     messages.success(request, "User already logged in⚠️")
+    #         #     return redirect('home')
+        
+    #     user=authenticate(request,username=username,password=password)
+        
+    #     if user is not None:
+    #         login(request,user)
+    #         return redirect('home')
+    #     else:
+    #         messages.success(request, "Invalid credentials ⚠️")
+    #         return redirect('user_login')
+
     
 
 def signup(request):
