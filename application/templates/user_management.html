@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+            background-color: #3ebfbb;
+            color: #fff;
+        }
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+        td input {
+            width: 100%;
+            height: 25%;
+            box-sizing: border-box;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .button {
+            background: #3ebfbb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-top: 3px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background: #207976;
+        }
+        .add-user-btn { 
+            position: absolute;
+            top: 50px; /* Adjusted */
+            right: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>User Management</h1>
+        <button id="addUserBtn" class="button add-user-btn" onclick="addRow()">Add User</button> 
+        <table id="userTable">
+            <tr>
+                <th>User ID</th>
+                <th>Username</th>
+                <th>Email</th>
+                {% comment %} <th>Password</th> {% endcomment %}
+                <th>Role</th>
+                {% comment %} <th>Action</th> {% endcomment %}
+            </tr>
+            <!-- Default data table will be populated here -->
+
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                {% if user.is_superuser %}
+                    <td>Admin</td>
+                {% elif user in {{group_users}} %}
+
+                            <td>Seller</td>
+       
+                {% else %}
+                    <td>Customer</td>
+                {% endif %}
+            </tr>
+            {%if user.groups.all == 'Seller'%}
+                Hii
+            {%endif%}
+            {{ user.groups }}
+            {% endfor %}
+
+        </table>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+            {% endfor %}
+    </div>
+
+    <script>
+        function addRow() {
+            const addUserBtn = document.getElementById("addUserBtn");
+            addUserBtn.disabled = true; // Disable the button
+            const userTable = document.getElementById("userTable");
+            const newRow = document.createElement("tr");
+            newRow.innerHTML = `
+                <td><input type="text" name="userId" placeholder="User ID"></td>
+                <td><input type="text" name="username" placeholder="Username"></td>
+                <td><input type="email" name="email" placeholder="Email"></td>
+                <td>
+                    <select name="group">
+                        <option value="admin">Admin</option>
+                        <option value="seller">Seller</option>
+                        <option value="Customer">Customer</option>
+                    </select>
+                </td>
+                <td>
+                    <button type="button" class="button" onclick="saveRow(this)">Save</button>
+                    <button type="button" class="button" onclick="deleteRow(this)">Delete</button>
+                </td>
+            `;
+            userTable.appendChild(newRow);
+        }
+
+        function deleteRow(button) {
+            const row = button.closest("tr");
+            row.remove();
+            const addUserBtn = document.getElementById("addUserBtn");
+            addUserBtn.disabled = false;
+        }
+
+        function saveRow(button) {
+            // Placeholder for save functionality
+            console.log("Save functionality will be implemented here.");
+            const addUserBtn = document.getElementById("addUserBtn");
+            addUserBtn.disabled = false; // Enable the button after saving
+        }
+    </script>
+    
+</body>
+</html>

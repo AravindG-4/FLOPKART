@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .card {
+            background: #f4f4f4;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .card h2 {
+            margin-top: 0;
+        }
+        .button {
+            background: #3ebfbb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .button:hover {
+            background: #207976;
+        }
+
+    </style>
+</head>
+<body>
+
+    {% if messages %}
+
+        {% for message in messages %}
+            {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="card">
+            <h2>User Management</h2>
+            <p>Manage users, roles, and permissions.</p>
+            <a href="{% url 'user_management' %}" class="button">Go to User Management</a>
+        </div>
+        <div class="card">
+            <h2>Content Management</h2>
+            <p>Manage website content such as articles, products, and categories.</p>
+            <a href="/content-management" class="button">Go to Content Management</a>
+        </div>
+        <div class="card">
+            <h2>Analytics</h2>
+            <p>View website analytics, traffic, and user behavior.</p>
+            <a href="/analytics" class="button">Go to Analytics</a>
+        </div>
+        <div class="card">
+            <h2>Settings</h2>
+            <p>Manage general settings, appearance, and preferences.</p>
+            <a href="/settings" class="button">Go to Settings</a>
+        </div>
+        <div class="card">
+            <h2>Update Products</h2>
+            <p>Update existing products in the inventory.</p>
+            <a href="{% url 'update_item' %}" class="button">Go to Update Products</a>
+        </div>
+        <div class="card">
+            <h2>Add New Products</h2>
+            <p>Add new products to the inventory.</p>
+            <a href="{% url 'add_item' %}" class="button">Go to Add New Products</a>
+        </div>
+        <div class="card">
+            <h2>Remove Products</h2>
+            <p>Remove existing products from the inventory.</p>
+            <a href="{% url 'remove_item' %}" class="button">Go to Remove Products</a>
+        </div>
+    </div>
+</body>
+</html>

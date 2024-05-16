@@ -6,13 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="icon" type="image/x-icon" href="images\titlelogo.png">
-    <link rel="Stylesheet" href="{% static 'css/base_page.css' %}">
+    <link rel="Stylesheet" href="{% static 'css/base.css' %}">
     <link rel="Stylesheet" href="{% static 'css/signup.css' %}">
     <link rel="Stylesheet" href="{% static 'css/home.css' %}">
     <title>Flopkart</title>
     <link rel="icon" type="image/x-icon" href="media\dev_images\logo.png">
 
-    <script type="text/javascript">
+    {% comment %} <script type="text/javascript">
         function noBack()
          {
              window.history.forward()
@@ -21,14 +21,14 @@
         window.onload = noBack;
         window.onpageshow = function(evt) { if (evt.persisted) noBack() }
         window.onunload = function() { void (0) }
-    </script>
+    </script> {% endcomment %}
 
 </head>
 
 <body>
 
     <header>
-        <img src="{% get_media_prefix %}dev_images\logo.png" alt="FlopkartLogo" width="175px" height="65px" >
+        <img src="{% static 'dev_images\logo.png' %}" alt="FlopkartLogo" width="175px" height="65px" >
         <div class="search">
             <form>
                 <input type="text" placeholder="Search for Products">
@@ -64,7 +64,7 @@
               <div class="dropdown-content">
                   <a href="#">Profile</a>
                   {% if request.user.is_authenticated %}
-                    <a href="{% url 'logout' %}" onclick="noBack()">Sign out</a>
+                    <a href="{% url 'logout' %}">Sign out</a>
                   {% else %}
                     <a href="{% url 'signup' %}">Sign in</a>
                   {% endif %}

@@ -3,6 +3,15 @@
 
 {% block content %}
 
+   {% if messages %}
+      {% for message in messages %}
+      
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+      {% endfor %}
+
+   {% endif %}
+
    <section class="hero" style="background-color: #3ebfbb;">
       <h2>Welcome to Flop Store</h2>
    </section><br>
@@ -10,7 +19,7 @@
    <div class="home_container">
       <div class="card-content">
          
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -25,7 +34,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -40,7 +49,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -55,7 +64,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -70,7 +79,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -85,7 +94,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -100,7 +109,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -115,7 +124,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -130,7 +139,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -145,7 +154,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -160,7 +169,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
@@ -175,7 +184,7 @@
 
       <div class="card-content">
 
-         <img src="{% get_media_prefix %}dev_images\product1.jpg" alt="Product 1" width="100%" height="53%"> 
+         <img src="{% static 'dev_images\product1.jpg' %}" alt="Product 1" width="100%" height="53%"> 
          <h2>Product Name</h2>
          <p>Description of the product goes here.</p>
          <i class="fa fa-star checked"></i>
