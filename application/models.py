@@ -17,11 +17,22 @@ from django.contrib.auth.models import User
 
 
 class Product(models.Model):
+    SIZE_CHOICES = [
+        ('XS', 'Extra Small'),
+        ('S', 'Small'),
+        ('M', 'Medium'),
+        ('L', 'Large'),
+        ('XL', 'Extra Large'),
+        ('XXL', 'Double Extra Large'),
+    ]
+    
     name=models.CharField(max_length=255)
     description=models.CharField(max_length=100)
     available_count=models.PositiveIntegerField()
     category= models.ForeignKey('Category', on_delete=models.CASCADE)
     sub_category = models.ForeignKey('SubCategory', on_delete = models.CASCADE)
+    size = models.CharField(max_length=3, choices=SIZE_CHOICES, default='M')
+    colour = models.CharField(max_length=255, default='Not Mentioned')
     brand = models.ForeignKey('Brand', on_delete = models.CASCADE)
     created_at = models.DateTimeField(auto_now=True)
     discount = models.DecimalField(max_digits = 10, decimal_places = 2, default = 0)

@@ -3,8 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <title>User Management</title>
     <style>
+        form {
+            width: 80%;
+            max-width: 400px;
+            padding: 20px;
+            border-radius: 15px;
+            background-color: #fff;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form select,
+        form button {
+            width: 100%;
+            padding: 10px;
+            padding-top: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            background-color:#3ebfbb;
+            color:#fff;
+            cursor: pointer;
+        }
+        
+        form button:hover{
+            background-color:#207976;
+        }
+
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -28,24 +62,21 @@
             border-collapse: collapse;
             margin-top: 20px;
         }
-        th {
-            padding: 10px;
+        th, td {
+            padding: 10px 20px;
             text-align: left;
             border-bottom: 1px solid #ddd;
+            height: 30px;
+        }
+        th {
             background-color: #3ebfbb;
             color: #fff;
         }
-        td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-        td input {
-            width: 100%;
-            height: 25%;
-            box-sizing: border-box;
-        }
         tr:nth-child(even) {
             background-color: #f2f2f2;
+        }
+        .new-row {
+            background-color: #d3f3f3;
         }
         .button {
             background: #3ebfbb;
@@ -64,93 +95,229 @@
         }
         .add-user-btn { 
             position: absolute;
-            top: 50px; /* Adjusted */
+            top: 50px;
             right: 20px;
         }
+        .fa-circle-check, .fa-circle-xmark {
+            padding: 5px;
+        }
+        input, select {
+            width: 70%;
+            height: 70%;
+            box-sizing: border-box;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 40px;
+        }
+        .modal-content {
+            border-radius: 35px;
+            background-color: #fefefe;
+            margin: 2px auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
     </style>
+
 </head>
 <body>
+
+    {% if messages %}
+        {% for message in messages %}
+         {% if message.tags %}  <script>alert("{{ message }}")</script> {% endif %}
+
+        {% endfor %}
+
+    {% endif %}
+
     <div class="container">
         <h1>User Management</h1>
-        <button id="addUserBtn" class="button add-user-btn" onclick="addRow()">Add User</button> 
+        <button id="addUserBtn" class="button add-user-btn">Add User</button> 
         <table id="userTable">
-            <tr>
-                <th>User ID</th>
-                <th>Username</th>
-                <th>Email</th>
-                {% comment %} <th>Password</th> {% endcomment %}
-                <th>Role</th>
-                {% comment %} <th>Action</th> {% endcomment %}
-            </tr>
-            <!-- Default data table will be populated here -->
-
-            {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                {% if user.is_superuser %}
-                    <td>Admin</td>
-                {% elif user in {{group_users}} %}
-
-                            <td>Seller</td>
-       
-                {% else %}
-                    <td>Customer</td>
-                {% endif %}
-            </tr>
-            {%if user.groups.all == 'Seller'%}
-                Hii
-            {%endif%}
-            {{ user.groups }}
-            {% endfor %}
-
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Default data table will be populated here -->
+                {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    {% if user.is_superuser %}
+                        <td>Admin</td>
+                        <td></td>
+                    {% elif user in group_users %}
+                        <td>Seller</td>
+                        <td><button class="button">Edit</button></td>
+                    {% else %}
+                        <td>Customer</td>
+                        <td></td>
+                    {% endif %}
+                </tr>
+                {% endfor %} 
+            </tbody>
         </table>
-        {% for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-            {% endfor %}
     </div>
 
-    <script>
-        function addRow() {
-            const addUserBtn = document.getElementById("addUserBtn");
-            addUserBtn.disabled = true; // Disable the button
-            const userTable = document.getElementById("userTable");
-            const newRow = document.createElement("tr");
-            newRow.innerHTML = `
-                <td><input type="text" name="userId" placeholder="User ID"></td>
-                <td><input type="text" name="username" placeholder="Username"></td>
-                <td><input type="email" name="email" placeholder="Email"></td>
-                <td>
-                    <select name="group">
-                        <option value="admin">Admin</option>
-                        <option value="seller">Seller</option>
-                        <option value="Customer">Customer</option>
-                    </select>
-                </td>
-                <td>
-                    <button type="button" class="button" onclick="saveRow(this)">Save</button>
-                    <button type="button" class="button" onclick="deleteRow(this)">Delete</button>
-                </td>
-            `;
-            userTable.appendChild(newRow);
-        }
 
-        function deleteRow(button) {
-            const row = button.closest("tr");
-            row.remove();
+    <div id="userForm" class="modal">
+
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+
+            <form method="post" name="addUserForm" class="form" id="addUserForm">
+                {% csrf_token %}
+
+                <div class="signup">
+
+                    <div class="head" style="text-align: center">
+                        <h2 style="color:#3ebfbb">Add User Form</h2>
+                    </div>
+                    
+                    <label for="uname"><b>Username</b></label>
+                    <input type="text" placeholder="Enter Username" name="uname" required><br>
+                    <span id="unameError" style="color: red;"></span>
+
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Email" name="email" required><br>
+                    <span id="emailError" style="color: red;"></span>
+              
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required><br>
+                    <span id="passwordError" style="color: red;"></span>
+
+                    <label for="conf_password"><b>Confirm Password</b></label>
+                    <input type="password" placeholder="Re-Enter Password" name="conf_password" required><br>
+                    <span id="confPasswordError" style="color: red;"></span>
+
+                    <label for="role">Role:</label><br>
+                    <select id="role" name="role">
+                        <option value="Admin">Admin</option>
+                        <option value="Seller">Seller</option>
+                        <option value="Customer">Customer</option>
+                    </select><br><br>
+
+                    <button type="submit" class="button" onclick="submitForm()">Submit</button>
+                      
+
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    </div>
+    
+    <script>
+
+        function openModal() {
+            const modal = document.getElementById("userForm");
+            modal.style.display = "block";
+        }
+    
+        function closeModal() {
+            const modal = document.getElementById("userForm");
+            modal.style.display = "none";
+        }
+    
+        document.getElementById("addUserBtn").addEventListener("click", openModal);
+    
+
+        document.getElementById("addUserForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                this.submit();
+            }
+        });
+        
+        function validateForm() {
+            var uname = document.forms["addUserForm"]["uname"].value;
+            var email = document.forms["addUserForm"]["email"].value;
+            var password = document.forms["addUserForm"]["password"].value;
+            var conf_password = document.forms["addUserForm"]["conf_password"].value;
+
+            // Validate username length
+            if (uname.trim().length < 8) {
+                document.getElementById("unameError").innerHTML = "Username must be at least 8 characters long<br><br>";
+                return false;
+            } 
+            else if(uname.trim().includes(' ')) {
+                document.getElementById("unameError").innerHTML = "Invalid Username<br><br>";
+                return false;
+            }
+            else {
+                document.getElementById("unameError").innerHTML = "";
+                //return true;
+            }
+
+            // Validate email format
+            if (email.trim().startsWith('@') || (!email.endsWith('@gmail.com') && !email.endsWith('@admin.com'))) {
+                document.getElementById("emailError").innerHTML = "Invalid Email Id<br><br>";
+                return false;
+            } 
+            else if(email.trim().includes(' ')) {
+                document.getElementById("emailError").innerHTML = "Invalid Email<br><br>";
+                return false;
+            }
+            else {
+                document.getElementById("emailError").innerHTML = "";
+                //return true;
+            }
+
+            // Validate password 
+            var passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
+            if (!passwordPattern.test(password.trim())) {
+                document.getElementById("passwordError").innerHTML = "Password must be of atleast 8 characters and contain atleast 1 uppercase, 1 lowercase, 1 special character, 1 number<br><br>";
+                return false;
+            } 
+            else if(password.trim().includes(' ')) {
+                document.getElementById("passwordError").innerHTML = "Invalid Password<br><br>";
+                return false;
+            }
+            else {
+                document.getElementById("passwordError").innerHTML = "";
+                //return true;
+            }
+
+            // Validate password confirmation
+            if (password.trim() !== conf_password.trim()) {
+                document.getElementById("confPasswordError").innerHTML = "Passwords do not match<br><br>";
+                return false;
+            } else {
+                document.getElementById("confPasswordError").innerHTML = "";
+                return true;
+            }
+        }
+            // Enable the "Add User" button
             const addUserBtn = document.getElementById("addUserBtn");
             addUserBtn.disabled = false;
-        }
-
-        function saveRow(button) {
-            // Placeholder for save functionality
-            console.log("Save functionality will be implemented here.");
-            const addUserBtn = document.getElementById("addUserBtn");
-            addUserBtn.disabled = false; // Enable the button after saving
-        }
-    </script>
-    
-</body>
+            
+        </script>
+        
+    </body>
 </html>

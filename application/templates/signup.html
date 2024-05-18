@@ -66,8 +66,8 @@
             if (validateForm()) {
                 this.submit();
             }
-            
         });
+
         function validateForm() {
             var uname = document.forms["signupForm"]["uname"].value;
             var email = document.forms["signupForm"]["email"].value;
@@ -75,36 +75,51 @@
             var conf_password = document.forms["signupForm"]["conf_password"].value;
 
             // Validate username length
-            if (uname.length < 8) {
+            if (uname.trim().length < 8) {
                 document.getElementById("unameError").innerHTML = "Username must be at least 8 characters long<br><br>";
                 return false;
-            } else {
+            } 
+            else if(uname.trim().includes(' ')) {
+                document.getElementById("unameError").innerHTML = "Invalid Username<br><br>";
+                return false;
+            }
+            else {
                 document.getElementById("unameError").innerHTML = "";
                 //return true;
             }
 
             // Validate email format
-            if (email.startsWith('@') || (!email.endsWith('@gmail.com') && !email.endsWith('@admin.com'))) {
+            if (email.trim().startsWith('@') || (!email.endsWith('@gmail.com') && !email.endsWith('@admin.com'))) {
                 document.getElementById("emailError").innerHTML = "Invalid Email Id<br><br>";
                 return false;
-            } else {
+            } 
+            else if(email.trim().includes(' ')) {
+                document.getElementById("emailError").innerHTML = "Invalid Email<br><br>";
+                return false;
+            }
+            else {
                 document.getElementById("emailError").innerHTML = "";
                 //return true;
             }
 
             // Validate password 
             var passwordPattern = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/;
-            if (!passwordPattern.test(password)) {
+            if (!passwordPattern.test(password.trim())) {
                 document.getElementById("passwordError").innerHTML = "Password must be of atleast 8 characters and contain atleast 1 uppercase, 1 lowercase, 1 special character, 1 number<br><br>";
                 return false;
-            } else {
+            } 
+            else if(password.trim().includes(' ')) {
+                document.getElementById("passwordError").innerHTML = "Invalid Password<br><br>";
+                return false;
+            }
+            else {
                 document.getElementById("passwordError").innerHTML = "";
                 //return true;
             }
 
             // Validate password confirmation
-            if (password !== conf_password) {
-                document.getElementById("confPasswordError").innerHTML = "Passwords do not match";
+            if (password.trim() !== conf_password.trim()) {
+                document.getElementById("confPasswordError").innerHTML = "Passwords do not match<br><br>";
                 return false;
             } else {
                 document.getElementById("confPasswordError").innerHTML = "";

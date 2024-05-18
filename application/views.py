@@ -92,13 +92,53 @@ def user_logout(request):
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['superuser'])
 def user_management(request):
-  try:
-    users = User.objects.all()
-    group = get_object_or_404(Group, name='Seller')
-    group_users = group.user_set.all()
-    return render(request, 'user_management.html', {'users': users, 'group_users': group_users})
-  except Exception as e:
-      print(e)
+    
+    if not request.user.is_authenticated:
+            return redirect('login')
+    
+    if request.method=='POST':
+        uname = request.POST.get('uname').strip()
+        email = request.POST.get('email').strip()
+        password = request.POST.get('password').strip()
+        conf_password = request.POST.get('conf_password').strip()
+        role = request.POST.get('role')
+        
+        try:
+            user = User.objects.get(username=uname)
+            messages.success(request, "Username already exists ⚠️")
+            return redirect('user_management')
+        
+        except:    
+            if password != conf_password:        
+                    messages.success(request, "Passwords do not match ⚠️")
+                    return redirect('user_management')
+                    
+            new_user = User.objects.create_user(uname, email, password)
+            
+            if role == 'Admin':
+                new_user.is_superuser = True
+                new_user.is_staff = True
+                new_user.save()
+            
+            elif role == 'Seller':
+                group = Group.objects.get(name = role)
+                new_user.groups.add(group)
+                
+            new_user.save()
+
+            messages.success(request, "User registered successfully ✅")
+            return redirect('user_management')
+
+    else:
+        try:
+            users = User.objects.all()
+            group = get_object_or_404(Group, name='Seller')
+            group_users = group.user_set.all()
+            return render(request, 'user_management.html', {'users': users, 'group_users': group_users})
+        except Exception as e:
+            users = []
+            return render(request, 'user_management.html',{'users': users})
+  
     
 @login_required(login_url='login')
 @allowed_user(allowed_roles=['superuser'])
