@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Order Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            padding: 10px 20px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #3ebfbb;
+            color: #fff;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        .button {
+            background: #3ebfbb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-top: 3px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background: #207976;
+        }
+        .add-order-btn {
+            position: absolute;
+            top: 50px;
+            right: 20px;
+        }
+        .fa-circle-check, .fa-circle-xmark {
+            padding: 5px;
+        }
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            table, th, td {
+                font-size: 14px;
+                padding: 8px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Order Logs</h1>
+        <table id="orderTable">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Product ID</th>
+                    <th>User ID</th>
+                    <th>Address</th>
+                    <th>Phone Number</th>
+                    <th>Quantity</th>
+                    <th>Total Price</th>
+                    <th>Order Time/Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example data, this will be dynamically generated in a real application -->
+                {% for orderlog in orderlogs %}
+                <tr>
+                    <td>{{orderlog.id}}</td>
+                    <td>{{orderlog.product.id}}</td>
+                    <td>{{orderlog.user.id}}</td>
+                    <td>{{orderlog.address}}</td>
+                    <td>{{orderlog.phone}}</td>
+                    <td>{{orderlog.quantity}}</td>
+                    <td>{{orderlog.total_price}}</td>
+                    <td>{{orderlog.ordered_time}}</td>
+                </tr>
+                {% endfor %}
+                <!-- Additional rows go here -->
+            </tbody>
+        </table>
+    </div>
+
+</body>
+</html>

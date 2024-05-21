@@ -10,9 +10,14 @@ urlpatterns = [
     path('logout/', views.user_logout, name="logout"),
     path('admin_dashboard/', views.admin_dashboard, name="admin_dashboard"),
     path('admin_dashboard/user_management/', views.user_management, name="user_management"),
-    path('admin_dashboard/add_item/', views.add_item, name="add_item"),
-    path('admin_dashboard/update_item/', views.update_item, name="update_item"),
-    path('admin_dashboard/remove_item/', views.remove_item, name="remove_item"),
+    path('admin_dashboard/user_management/delete_user/', views.delete_user, name="delete_user"),
+    path('admin_dashboard/user_management/seller_details/', views.seller_details, name="seller_details"),
+    path('admin_dashboard/admin_analytics/', views.admin_analytics, name="admin_analytics"),
+    path('admin_dashboard/product_management/', views.product_management, name="product_management"),
+    path('admin_dashboard/product_management/add_product/', views.add_product, name="add_product"),
+    path('admin_dashboard/product_management/update_product/', views.update_product, name="update_product"),
+    path('admin_dashboard/orderlogs/', views.orderlogs, name="orderlogs"),
+    path('admin_dashboard/orderform/', views.orderform, name="orderform"),
 ]+ static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 if settings.DEBUG:

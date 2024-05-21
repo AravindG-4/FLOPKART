@@ -58,35 +58,21 @@
             <a href="{% url 'user_management' %}" class="button">Go to User Management</a>
         </div>
         <div class="card">
-            <h2>Content Management</h2>
-            <p>Manage website content such as articles, products, and categories.</p>
-            <a href="/content-management" class="button">Go to Content Management</a>
-        </div>
-        <div class="card">
             <h2>Analytics</h2>
             <p>View website analytics, traffic, and user behavior.</p>
-            <a href="/analytics" class="button">Go to Analytics</a>
+            <a href="{% url 'admin_analytics' %}" class="button">Go to Analytics</a>
         </div>
         <div class="card">
-            <h2>Settings</h2>
-            <p>Manage general settings, appearance, and preferences.</p>
-            <a href="/settings" class="button">Go to Settings</a>
+            <h2>Product management</h2>
+            <p>Manage products in the inventory.</p>
+            <a href="{% url 'product_management' %}" class="button">Go to Product Management</a>
         </div>
         <div class="card">
-            <h2>Update Products</h2>
-            <p>Update existing products in the inventory.</p>
-            <a href="{% url 'update_item' %}" class="button">Go to Update Products</a>
+            <h2>Manage Order Logs</h2>
+            <p>View and Maintain Order Logs of Customer</p>
+            <a href="{% url 'orderlogs' %}" class="button">Go to Order Logs</a>
         </div>
-        <div class="card">
-            <h2>Add New Products</h2>
-            <p>Add new products to the inventory.</p>
-            <a href="{% url 'add_item' %}" class="button">Go to Add New Products</a>
-        </div>
-        <div class="card">
-            <h2>Remove Products</h2>
-            <p>Remove existing products from the inventory.</p>
-            <a href="{% url 'remove_item' %}" class="button">Go to Remove Products</a>
-        </div>
+
     </div>
 </body>
 </html>

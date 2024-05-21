@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>User Management</title>
+    <style>
+        form {
+            width: 80%;
+            max-width: 400px;
+            padding-left: 25%;
+            border-radius: 15px;
+            background-color: #fff;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="password"],
+        form select,
+        form button {
+            width: 100%;
+            padding: 10px;
+            padding-top: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        form button {
+            background-color:#3ebfbb;
+            color:#fff;
+            cursor: pointer;
+        }
+        
+        form button:hover{
+            background-color:#207976;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        h1 {
+            text-align: center;
+        }
+        
+        .button {
+            background: #3ebfbb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-top: 3px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background: #207976;
+        }
+        
+        input, select {
+            width: 70%;
+            height: 70%;
+            box-sizing: border-box;
+        }
+        .modal {
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 40px;
+        }
+        .modal-content {
+            border-radius: 35px;
+            background-color: #fefefe;
+            margin: 2px auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 70%;
+        }
+        
+    </style>
+
+</head>
+<body>
+
+    <div id="sellerForm" class="modal">
+
+        <div class="modal-content">
+
+            <form method="post" name="detailsForm" class="form" id="detailsForm">
+                {% csrf_token %}
+
+                <div class="signup">
+
+                    <div class="head" style="text-align: center">
+                        <h2 style="color:#3ebfbb">Brand Details Form</h2>
+                    </div>
+                    
+                    <label for="brand_name">Brand Name</label>
+                    <input type="text" id="brand_name" name="brand_name" required><br>
+                    <span id="nameError" style="color: red;"></span>
+
+                    <!-- Logo Field -->
+                    <label for="brand_logo">Logo</label>
+                    <input type="file" id="brand_logo" name="brand_logo" accept="image/*" required><br><br>
+                    
+                    <!-- Description Field -->
+                    <label for="brand_description">Description</label>
+                    <textarea id="brand_description" name="brand_description" rows="4" cols="50" required></textarea><br><br>
+                    
+                    <!-- Top Categories Field -->
+                    <label for="top_categories_1">Top Categories</label>
+                    <select id="top_categories_1" name="top_categories_1">
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select><br><br>
+
+                    <label for="top_categories_2">Top Categories</label>
+                    <select id="top_categories_2" name="top_categories_2">
+                        {% for category in categories %}
+                            <option value="{{ category.id }}">{{ category.name }}</option>
+                        {% endfor %}
+                    </select><br><br>
+                    
+                    <!-- Top SubCategories Field -->
+                    <label for="top_subCategories_1">Top SubCategories</label>
+                    <select id="top_subCategories_1" name="top_subCategories_1">
+                        {% for subcategory in subcategories %}
+                            <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                        {% endfor %}
+                    </select><br><br>
+
+                    <label for="top_subCategories_2">Top SubCategories</label>
+                    <select id="top_subCategories_2" name="top_subCategories_2">
+                        {% for subcategory in subcategories %}
+                            <option value="{{ subcategory.id }}">{{ subcategory.name }}</option>
+                        {% endfor %}
+                    </select><br><br>
+                    
+                    <!-- Submit Button -->
+                    <button type="submit">Save</button>    
+
+                </div>
+                
+            </form>
+        </div>
+    </div>
+    </div>
+    
+    <script>
+
+        document.getElementById("detailsForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                this.submit();
+            }
+        });
+        
+        function validateForm() {
+            var brand_name = document.forms["detailsForm"]["brand_name"].value;
+            
+
+
+            if(brand_name.trim().includes(' ')) {
+                document.getElementById("nameError").innerHTML = "Brand name with space is not allowed<br><br>";
+                return false;
+            }
+            else {
+                document.getElementById("nameError").innerHTML = "";
+                return true;
+            }
+        }
+            
+        </script>
+        
+    </body>
+</html>

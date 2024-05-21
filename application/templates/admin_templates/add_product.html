@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>Add Product</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .container h1 {
+            text-align: center;
+        }
+        form {
+            width: 100%;
+        }
+        form input[type="text"],
+        form input[type="number"],
+        form input[type="file"],
+        form textarea,
+        form select,
+        form button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        form button {
+            background-color: #3ebfbb;
+            color: #fff;
+            cursor: pointer;
+        }
+        form button:hover {
+            background-color: #207976;
+        }
+        .button {
+            background: #3ebfbb;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            border-radius: 5px;
+            margin-top: 3px;
+            transition: background-color 0.3s;
+        }
+        .button:hover {
+            background: #207976;
+        }
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Add Product</h1>
+        <form method="post" name="addProductForm" class="form" id="addProductForm" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label for="pname"><b>Product Name</b></label>
+            <input type="text" placeholder="Enter Product Name" name="pname" required>
+            <span id="pnameError" class="error"></span><br><br>
+
+            <label for="brand"><b>Brand</b></label>
+            <select name="brand">
+                {% for brand in brands %}
+                    <option value={{brand.id}}>{{brand.name}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="category"><b>Category</b></label>
+            <select name="category" required>
+                {% for category in categories %}
+                    <option value={{category.id}}>{{category.name}}</option>
+                {% endfor %}
+            </select>
+            <span id="categoryError" class="error"></span><br><br>
+
+            <label for="subcategory"><b>Subcategory</b></label>
+            <select name="subcategory">
+                {% for subCategory in subCategories %}
+                    <option value={{subCategory.id}}>{{subCategory.name}}</option>
+                {% endfor %}
+            </select>
+
+            <label for="price"><b>Price (INR)</b></label>
+            <input type="number" placeholder="Enter Price" name="price" required>
+            <span id="priceError" class="error"></span><br><br>
+
+            <label for="discount"><b>Discount (%)</b></label>
+            <input type="number" step="0.01" placeholder="Enter Discount" name="discount" required>
+            <span id="discountError" class="error"></span><br><br>
+
+            <label for="stock_xs"><b>Stock for XS</b></label>
+            <input type="number" placeholder="Enter Stock Quantity" name="stock_xs" required>
+            <span id="stockXSError" class="error"></span><br><br>
+
+            <label for="stock_s"><b>Stock for S</b></label>
+            <input type="number" placeholder="Enter Stock Quantity" name="stock_s" required>
+            <span id="stockSError" class="error"></span><br><br>
+
+            <label for="stock_m"><b>Stock for M</b></label>
+            <input type="number" placeholder="Enter Stock Quantity" name="stock_m" required>
+            <span id="stockMError" class="error"></span><br><br>
+
+            <label for="stock_l"><b>Stock for L</b></label>
+            <input type="number" placeholder="Enter Stock Quantity" name="stock_l" required>
+            <span id="stockLError" class="error"></span><br><br>
+
+            <label for="stock_xl"><b>Stock for XL</b></label>
+            <input type="number" placeholder="Enter Stock Quantity" name="stock_xl" required>
+            <span id="stockXLError" class="error"></span><br><br>
+
+            <label for="stock_xxl"><b>Stock for XXL</b></label>
+            <input type="number" placeholder="Enter Stock Quantity" name="stock_xxl" required>
+            <span id="stockXXLError" class="error"></span><br><br>
+
+            <label for="color"><b>Color</b></label>
+            <input type="text" placeholder="Enter Color" name="color" required>
+            <span id="colorError" class="error"></span><br><br>
+
+            <label for="description"><b>Description</b></label>
+            <textarea placeholder="Enter Product Description" name="description" required></textarea><br>
+
+            <label for="main_image"><b>Main Image</b></label>
+            <input type="file" id="main_image" name="main_image" accept="image/*" required>
+
+            <label for="sub_image1"><b>Sub Image1</b></label>
+            <input type="file" id="sub_image1" name="sub_image1" accept="image/*" required>
+
+            <label for="sub_image2"><b>Sub Image2</b></label>
+            <input type="file" id="sub_image2" name="sub_image2" accept="image/*" required>
+
+            <button type="submit" class="button" onclick="submitForm()">Submit</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById("addProductForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+            if (validateForm()) {
+                this.submit();
+            }
+        });
+
+        function validateForm() {
+            var pname = document.forms["addProductForm"]["pname"].value;
+            var price = document.forms["addProductForm"]["price"].value;
+            var discount = document.forms["addProductForm"]["discount"].value;
+            var stockXS = document.forms["addProductForm"]["stock_xs"].value;
+            var stockS = document.forms["addProductForm"]["stock_s"].value;
+            var stockM = document.forms["addProductForm"]["stock_m"].value;
+            var stockL = document.forms["addProductForm"]["stock_l"].value;
+            var stockXL = document.forms["addProductForm"]["stock_xl"].value;
+            var stockXXL = document.forms["addProductForm"]["stock_xxl"].value;
+            var color = document.forms["addProductForm"]["color"].value;
+
+            var isValid = true;
+            var firstErrorField = null;
+
+            // Validate product name length
+            if (pname.trim().length < 5) {
+                document.getElementById("pnameError").innerHTML = "Product name must be at least 5 characters long";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["pname"];
+            }
+            } else {
+                document.getElementById("pnameError").innerHTML = "";
+            }
+
+            // Validate price
+            if (isNaN(price) || price <= 0) {
+                document.getElementById("priceError").innerHTML = "Price must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["price"];
+            } else {
+                document.getElementById("priceError").innerHTML = "";
+            }
+
+            // Validate discount
+            if (isNaN(discount) || discount < 0) {
+                document.getElementById("discountError").innerHTML = "Discount must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["discount"];
+            } else {
+                document.getElementById("discountError").innerHTML = "";
+            }
+
+            // Validate stock
+            if (isNaN(stockXS) || stockXS < 0) {
+                document.getElementById("stockXSError").innerHTML = "Stock for XS must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["stock_xs"];
+            } else {
+                document.getElementById("stockXSError").innerHTML = "";
+            }
+
+            if (isNaN(stockS) || stockS < 0) {
+                document.getElementById("stockSError").innerHTML = "Stock for S must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["stock_s"];
+            } else {
+                document.getElementById("stockSError").innerHTML = "";
+            }
+
+            if (isNaN(stockM) || stockM < 0) {
+                document.getElementById("stockMError").innerHTML = "Stock for M must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["stock_m"];
+            } else {
+                document.getElementById("stockMError").innerHTML = "";
+            }
+
+            if (isNaN(stockL) || stockL < 0) {
+                document.getElementById("stockLError").innerHTML = "Stock for L must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["stock_l"];
+            } else {
+                document.getElementById("stockLError").innerHTML = "";
+            }
+
+            if (isNaN(stockXL) || stockXL < 0) {
+                document.getElementById("stockXLError").innerHTML = "Stock for XL must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["stock_xl"];
+            } else {
+                document.getElementById("stockXLError").innerHTML = "";
+            }
+
+            if (isNaN(stockXXL) || stockXXL < 0) {
+                document.getElementById("stockXXLError").innerHTML = "Stock for XXL must be a positive number";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["stock_xxl"];
+            } else {
+                document.getElementById("stockXXLError").innerHTML = "";
+            }
+
+            // Validate color
+            if (!isNaN(color)) {
+                document.getElementById("colorError").innerHTML = "Color must be text only";
+                isValid = false;
+                if (!firstErrorField) firstErrorField = document.forms["addProductForm"]["color"];
+            } else {
+                document.getElementById("colorError").innerHTML = "";
+            }
+
+            if (firstErrorField) {
+                firstErrorField.focus();
+                firstErrorField.scrollIntoView({ behavior: 'smooth' });
+            }
+
+            return isValid;
+        }
+    </script>
+</body>
+</html>
